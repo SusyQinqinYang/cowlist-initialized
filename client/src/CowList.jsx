@@ -1,17 +1,14 @@
 import React from 'react';
-import CowListEntry from './CowListEntry.jsx';
 
 const CowList = ({ cows, handleCowLIstEntryClick }) => {
     return (
         <div className='cow-list'>
             <h4>Cow Name List</h4>
-            {cows.map((cow, ind) =>
-                (<CowListEntry
-                    key={ind}
-                    cow={cow}
-                    handleCowLIstEntryClick={handleCowLIstEntryClick}
-                />)
-            )}
+            <ul>
+                {cows.map((cow, ind) =>
+                    (<li className='cow-list-entry-title' onClick={() => handleCowLIstEntryClick(cow)} key={ind}>{cow.name}</li>)
+                )}
+            </ul>
         </div>
     )
 }
