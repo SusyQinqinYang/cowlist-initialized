@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(express.static('./client/dist'));
 
 
-app.get('/', (req, res) => res.send('Hello World!'))
+// app.get('/', (req, res) => res.send('Hello World!'))
 
 app.get('/api/cows', (req, res) => {
     let queryStr = 'SELECT name, description FROM list';
@@ -22,7 +22,7 @@ app.get('/api/cows', (req, res) => {
 });
 
 app.post('/api/cows', (req, res) => {
-    console.log('body', req.body)
+    console.log('req body', req.body)
     let queryStr = `INSERT INTO list (name, description) VALUES (?, ?);`;
     db.query(queryStr, [req.body.name, req.body.description], (err, data) => {
         if (err) { return res.sendStatus(500); }
