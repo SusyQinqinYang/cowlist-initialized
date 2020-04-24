@@ -11,10 +11,11 @@ class App extends React.Component {
 
     this.state = {
       cows: [],
-      currentCow: ''
+      currentCow: 'Please waite...'
     };
     this.changeCurrentCow = this.changeCurrentCow.bind(this);
     this.newCowReq = this.newCowReq.bind(this);
+    this.deleteCow = this.deleteCow.bind(this);
   }
 
   componentDidMount() {
@@ -50,17 +51,29 @@ class App extends React.Component {
       });
   };
 
+  deleteCow(e, id) {
+    e.preventDefault();
+    axios.delete(`/api/cows/${id}`)
+      .then(() => { this.getCows() })
+      .catch((err) => { console.log('delete err', err) });
+  };
+
   render() {
     return (
       <div>
-        <div className='newCow'>
-          <NewCow newCowReq={this.newCowReq} />
-        </div>
         <div className='cowDisplay'>
           <CowDisplay currentCow={this.state.currentCow} />
         </div>
         <div>
-          <CowList cows={this.state.cows} handleCowLIstEntryClick={this.changeCurrentCow} />
+          <CowList
+            cows={this.state.cows}
+            handleCowLIstEntryClick={this.changeCurrentCow}
+            deleteCow={this.deleteCow}
+          />
+        </div>
+        <div className='newCow'>
+          <h4>Creat Your Cow</h4>
+          <NewCow newCowReq={this.newCowReq} />
         </div>
       </div>
     );
