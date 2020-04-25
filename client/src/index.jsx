@@ -19,8 +19,24 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log('getCow promise?', this.getCows());
     this.getCows();
-  }
+    console.log('did mount state', this.state.cows);
+  };
+
+  getCows() {
+    axios.get('/api/cows')
+      .then((data) => {
+        console.log('data from req', data.data);
+        this.setState({
+          cows: data.data
+        })
+      })
+      .catch((err) => {
+        console.log('AXIOS get error', err);
+      });
+    console.log('cows after setState', this.state.cows);
+  };
 
   changeCurrentCow(cow) {
     this.setState({
@@ -37,19 +53,6 @@ class App extends React.Component {
         console.log('client axios post err', err);
       })
   }
-
-  getCows() {
-    return axios.get('/api/cows')
-      .then((data) => {
-        console.log('data in didmount', data.data);
-        this.setState({
-          cows: data.data
-        })
-      })
-      .catch((err) => {
-        console.log('AXIOS get error', err);
-      });
-  };
 
   deleteCow(e, id) {
     e.preventDefault();
