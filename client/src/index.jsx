@@ -17,7 +17,7 @@ class App extends React.Component {
     this.newCowReq = this.newCowReq.bind(this);
     this.deleteCow = this.deleteCow.bind(this);
   }
-
+  //testing
   componentDidMount() {
     console.log('getCow promise?', this.getCows());
     this.getCows();
