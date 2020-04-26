@@ -46,7 +46,8 @@ class App extends React.Component {
 
   newCowReq(newCowObj) {
     axios.post('/api/cows', newCowObj)
-      .then(() => {
+      .then((result) => {
+        console.log('cow just be posted', result.data);
         this.getCows();
       })
       .catch((err) => {
@@ -55,9 +56,19 @@ class App extends React.Component {
   }
 
   deleteCow(e, id) {
+    console.log('name', id);
     e.preventDefault();
-    axios.delete(`/api/cows/${id}`)
-      .then(() => { this.getCows() })
+    axios({
+      method: 'delete',
+      url: '/api/cows',
+      params: {
+        id: id
+      }
+    })
+      .then(() => {
+        console.log('deleted')
+        this.getCows()
+      })
       .catch((err) => { console.log('delete err', err) });
   };
 

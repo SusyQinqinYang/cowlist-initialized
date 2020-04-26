@@ -5,8 +5,15 @@ const CowListEntry = ({ cow, handleCowLIstEntryClick, deleteCow }) => {
     function updateCow() {
         let newName = prompt("Please update your cow's name", `${cow.name}`);
         if (newName != null) {
-            axios.put(`/api/cows/${cow.id}`, { name: newName })
-                .then(() => { console.log('updated secussfully') })
+            axios({
+                method: 'put',
+                url: '/api/cows/',
+                params: {
+                    id: cow._id,
+                    name: newName
+                }
+            })
+                .then(() => { console.log('updated successfully') })
                 .catch((err) => { console.log(err) });
         }
     };
@@ -15,7 +22,7 @@ const CowListEntry = ({ cow, handleCowLIstEntryClick, deleteCow }) => {
         <li className='cow-list-entry-title' onClick={() => handleCowLIstEntryClick(cow)} >
             {cow.name}
             <button onClick={updateCow}>Edit</button>
-            <button value={cow.id} onClick={(e) => { deleteCow(e, cow.id) }}>Delete</button>
+            <button value={cow._id} onClick={(e) => { deleteCow(e, cow._id) }}>Delete</button>
         </li>
     );
 };
